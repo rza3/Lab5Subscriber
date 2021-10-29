@@ -11,6 +11,16 @@
 std::vector<osrf_gear::Order> order_vector;
 osrf_gear::GetMaterialLocations location;
 ros::ServiceClient location_client;
+osrf_gear::LogicalCameraImage img_bin1;
+osrf_gear::LogicalCameraImage img_bin2;
+osrf_gear::LogicalCameraImage img_bin3;
+osrf_gear::LogicalCameraImage img_bin4;
+osrf_gear::LogicalCameraImage img_bin5;
+osrf_gear::LogicalCameraImage img_bin6;
+osrf_gear::LogicalCameraImage img_agv_bin1;
+osrf_gear::LogicalCameraImage img_agv_bin2;
+osrf_gear::LogicalCameraImage img_quality_control1;
+osrf_gear::LogicalCameraImage img_quality_control2;
 bool found_part = false;
 
 //osrf_gear::GetMaterialLocation::Request req;
@@ -37,6 +47,7 @@ void bin1Callback(const osrf_gear::LogicalCameraImage img)
   if(!found_part)
 	{
 		ROS_INFO("Checking bin 1");
+		img_bin1 = img;
 		for(int i = 0; i<img.models.size(); i++){
 			if(!found_part & img.models[i].type == location.request.material_type){
 				ROS_WARN("Found in bin 1");
@@ -63,6 +74,7 @@ void bin2Callback(const osrf_gear::LogicalCameraImage img)
   if(!found_part)
 	{
 		ROS_INFO("Checking bin 2");
+		img_bin2 = img;
 		for(int i = 0; i<img.models.size(); i++){
 			if(!found_part & img.models[i].type == location.request.material_type){
 				ROS_WARN("Found in bin 2");
@@ -89,6 +101,7 @@ void bin3Callback(const osrf_gear::LogicalCameraImage img)
   if(!found_part)
 	{
 		ROS_INFO("Checking bin 3");
+		img_bin3 = img;
 		for(int i = 0; i<img.models.size(); i++){
 			if(!found_part & img.models[i].type == location.request.material_type){
 				ROS_WARN("Found in bin 3");
@@ -115,6 +128,7 @@ void bin4Callback(const osrf_gear::LogicalCameraImage img)
   if(!found_part)
 	{
 		ROS_INFO("Checking bin 4");
+		img_bin4 = img;
 		for(int i = 0; i<img.models.size(); i++){
 			if(!found_part & img.models[i].type == location.request.material_type){
 				ROS_WARN("Found in bin 4"); 
@@ -141,6 +155,7 @@ void bin5Callback(const osrf_gear::LogicalCameraImage img)
   if(!found_part)
 	{
 		ROS_INFO("Checking bin 5");
+		img_bin5 = img;
 		for(int i = 0; i<img.models.size(); i++){
 			if(!found_part & img.models[i].type == location.request.material_type){
 				ROS_WARN("Found in bin 5");
@@ -167,6 +182,7 @@ void bin6Callback(const osrf_gear::LogicalCameraImage img)
   if(!found_part)
 	{
 		ROS_INFO("Checking bin 6");
+		img_bin6 = img;
 		for(int i = 0; i<img.models.size(); i++){
 			if(!found_part & img.models[i].type == location.request.material_type){
 				ROS_WARN("Found in bin 6");
@@ -192,6 +208,7 @@ void agv1Callback(const osrf_gear::LogicalCameraImage img)
 {
   if(!found_part)
 	{
+		img_agv_bin1 = img;
 		ROS_INFO("Checking agv bin 1");
 		for(int i = 0; i<img.models.size(); i++){
 			if(!found_part & img.models[i].type == location.request.material_type){
@@ -218,6 +235,7 @@ void agv2Callback(const osrf_gear::LogicalCameraImage img)
 {
   if(!found_part)
 	{
+		img_agv_bin2 = img;
 		ROS_INFO("Checking agv bin 2");
 		for(int i = 0; i<img.models.size(); i++){
 			if(!found_part & img.models[i].type == location.request.material_type){
@@ -245,6 +263,7 @@ void qual1Callback(const osrf_gear::LogicalCameraImage img)
   if(!found_part)
 	{
 		ROS_INFO("Checking qual 1");
+		img_quality_control1 = img;
 		for(int i = 0; i<img.models.size(); i++){
 			if(!found_part & img.models[i].type == location.request.material_type){
 				ROS_WARN("Found in qual 1");
@@ -271,6 +290,7 @@ void qual2Callback(const osrf_gear::LogicalCameraImage img)
   if(!found_part)
 	{
 		ROS_INFO("Checking qual 2");
+		img_quality_control2 = img;
 		for(int i = 0; i<img.models.size(); i++){
 			if(!found_part & img.models[i].type == location.request.material_type){
 				ROS_WARN("Found in qual 2");
@@ -307,6 +327,7 @@ int main(int argc, char **argv)
    */
   ros::init(argc, argv, "listener");
 order_vector.clear();
+
   /**
    * NodeHandle is the main access point to communications with the ROS system.
    * The first NodeHandle constructed will fully initialize this node, and the last
